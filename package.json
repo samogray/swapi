@@ -5,8 +5,10 @@
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "reactstrap": "^6.5.0"
   },
+  "postinstall": "grep -rl node_modules/@material/ -e '@import \"@material' | xargs sed -i \"\" 's/@material/~@material/g'",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -21,5 +23,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0"
+  }
 }

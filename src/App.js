@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react'
 import Header from './components/header'
+import {Container} from 'reactstrap';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-       <Header />
-      </div>
-    );
+      <Container>
+        <Header />
+        <main>
+         
+        </main>
+      </Container>
+    )
   }
 }
 
-export default App;
+export default App

@@ -18,11 +18,7 @@ class RandomPlanet extends React.Component {
   swapiService = new SwapiService()
 
   state = {
-    population: null,
-    name: '',
-    rotation: null,
-    diameter: null,
-    pic: null,
+   planet: {}
   }
 
   componentDidMount() {
@@ -30,7 +26,7 @@ class RandomPlanet extends React.Component {
     this.updatePlanet(id)
   }
 
-  onPlanetLoaded = (planet) => this.setState(planet)
+  onPlanetLoaded = (planet) => this.setState({planet})
 
   updatePlanet = (id) => this.swapiService.getPlanet(id)
   .then(this.onPlanetLoaded)
@@ -38,7 +34,7 @@ class RandomPlanet extends React.Component {
 
 
   render() {
-    const {population, name, rotation, diameter, pic} = this.state
+    const {population, name, rotation, diameter, pic} = this.state.planet
     return (
       <div>
         <Card>

@@ -21,6 +21,7 @@ class RandomPlanet extends React.Component {
   state = {
     planet: {},
     loading: true,
+    error: false,
   }
 
   componentDidMount() {
@@ -30,11 +31,13 @@ class RandomPlanet extends React.Component {
 
   onPlanetLoaded = planet => this.setState({planet, loading: false})
 
+  onErrror = () => this.setState({error: true, loading: false})
+
   updatePlanet = id =>
     this.swapiService
       .getPlanet(id)
       .then(this.onPlanetLoaded)
-      .catch(err => console.error(err))
+      .catch(this.onErrror)
 
   render() {
 
@@ -50,7 +53,7 @@ class RandomPlanet extends React.Component {
       <div>
         <Card>
           <Container>
-            {!this.state.loading ? (
+            {!this.state.error ? (
               <Row>
                 <Col xs="3">
                   <CardImg top width="100%" src={pic} alt={name} />
@@ -79,8 +82,9 @@ class RandomPlanet extends React.Component {
                 </Col>
               </Row>
             ) : (
-              <Spinner />
+              <div>Error message</div>
             )}
+            {this.state.loading && <Spinner />}
           </Container>
         </Card>
       </div>

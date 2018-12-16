@@ -13,7 +13,6 @@ import {
 
 import SwapiService from '../../utils/swapi-service'
 
-const PIC_URL = 'https://starwars-visualguide.com/assets/img/planets/'
 class RandomPlanet extends React.Component {
 
   swapiService = new SwapiService()
@@ -23,6 +22,7 @@ class RandomPlanet extends React.Component {
     name: '',
     rotation: null,
     diameter: null,
+    pic: null,
   }
 
   componentDidMount() {
@@ -30,22 +30,15 @@ class RandomPlanet extends React.Component {
     this.updatePlanet(id)
   }
 
+  onPlanetLoaded = (planet) => this.setState(planet)
+
   updatePlanet = (id) => this.swapiService.getPlanet(id)
-  .then(({name, rotation_period, diameter, population}) => {
-    this.setState({
-      id,
-      name,
-      population,
-      rotation: rotation_period,
-      diameter,
-    })
-  })
+  .then(this.onPlanetLoaded)
   .catch(err => console.error(err))
 
 
   render() {
-    const {population, name, rotation, diameter, id} = this.state
-    console.log(this.state)
+    const {population, name, rotation, diameter, pic} = this.state
     return (
       <div>
         <Card>
@@ -55,8 +48,8 @@ class RandomPlanet extends React.Component {
                 <CardImg
                   top
                   width="100%"
-                  src={`${PIC_URL}/${id}.jpg`}
-                  alt="Card image cap"
+                  src={pic}
+                  alt={name}
                 />
               </Col>
               <Col xs="8">

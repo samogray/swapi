@@ -10,7 +10,7 @@ export default class Swapi {
   }
 
   getPerson = (id) =>  this.getResource(`people/${id}/`)
-  getPlanet = (id) =>  this.getResource(`planet/${id}/`)
+  getPlanet = (id) =>  this.getResource(`planets/${id}/`)
   getStarship = (id) =>  this.getResource(`starships/${id}/`)
 
   getAllPeople = async () => {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Header from './components/header'
+import RandomPlanet from './components/random-planet'
 import {Container} from 'reactstrap';
 
 class App extends Component {
@@ -8,7 +9,7 @@ class App extends Component {
       <Container>
         <Header />
         <main>
-         
+         <RandomPlanet />
         </main>
       </Container>
     )

@@ -1,17 +1,21 @@
 import React, {Component} from 'react'
 import Header from './components/header'
 import RandomPlanet from './components/random-planet'
-import {Container} from 'reactstrap';
+import HeroList from './components/hero-list'
+import {Container} from 'reactstrap'
 
 class App extends Component {
   render() {
     return (
-      <Container>
-        <Header />
-        <main>
-         <RandomPlanet />
-        </main>
-      </Container>
+      <div>
+        <Container>
+          <Header />
+          <main>
+            <RandomPlanet />
+          </main>
+        </Container>
+       <HeroList />
+      </div>
     )
   }
 }

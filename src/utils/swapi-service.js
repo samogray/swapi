@@ -57,6 +57,7 @@ export default class Swapi {
     birthYear: birth_year,
     mass,
     gender,
+    url,
   })
 
   _getTransformStarships = ({url, name, model, manufacturer, cost_in_credits, passengers}) => ({

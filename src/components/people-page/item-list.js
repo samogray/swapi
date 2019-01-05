@@ -12,7 +12,7 @@ class ItemList extends React.Component {
             tag="button"
             type="button"
             key={id}
-            active={activeItem === id}
+            active={activeItem.toString().toLowerCase() === id}
             onClick={() => handleClick(id)}
           >
             {name}

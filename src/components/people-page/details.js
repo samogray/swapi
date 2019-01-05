@@ -1,50 +1,77 @@
 import React from 'react'
-import {Container, Row, Col, ListGroup, ListGroupItem, Media} from 'reactstrap'
-import ItemList from './item-list'
-// import PeoopleDetails from './details'
+import {ListGroup, ListGroupItem, Media} from 'reactstrap'
+import Spinner from '../spinner'
+
 import SwapiService from '../../utils/swapi-service'
 
-class PeoplePage extends React.Component {
+
+class Details extends React.Component {
   swapiService = new SwapiService()
 
   state = {
-    peoples: [],
     error: false,
-    activeHero: 1
+    loading: true
   }
 
   componentDidMount() {
-    this.loadPeopleList()
+    this.loadPerson()
   }
 
-  onPlanetLoaded = peoples => this.setState({peoples, loading: false})
+  componentDidUpdate(prevProps) {
+    if (this.props.personId !== prevProps.personId) {
+      this.setState({loading: true})
+      this.loadPerson()
+    }
+  }
 
-  onErrror = () => this.setState({error: true, loading: false})
+  onPersonLoaded = ({name, birthYear, height, eyeColor, gender, pic}) =>
+    this.setState({
+      name,
+      birthYear,
+      height,
+      eyeColor,
+      gender,
+      pic,
+      loading: false
+    })
 
-  loadPeopleList = () =>
+  loadPerson = () => {
+    if (!this.props.personId) {
+      return
+    }
+
     this.swapiService
-      .getAllPeople()
-      .then(this.onPlanetLoaded)
+      .getPerson(this.props.personId)
+      .then(this.onPersonLoaded)
       .catch(this.onErrror)
-
-  handleClick = id => console.log(id)
+  }
 
   render() {
-    console.log(this.state.peoples)
-    const {peoples, activeHero, error} = this.props.people
+    const {name, birthYear, height, eyeColor, gender, loading, pic} = this.state
+    console.log('render Details component')
+
     return (
-      <Media body>
-        <Media heading>Luk</Media>
-        <ListGroup>
-          <ListGroupItem>Cras justo odio</ListGroupItem>
-          <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-          <ListGroupItem>Morbi leo risus</ListGroupItem>
-          <ListGroupItem>Porta ac consectetur ac</ListGroupItem>
-          <ListGroupItem>Vestibulum at eros</ListGroupItem>
-        </ListGroup>
+      loading ? <Spinner /> : <Media>
+        <Media left href="#">
+          <Media
+            object
+            src={pic}
+            className="picture"
+            alt="Generic placeholder image"
+          />
+        </Media>
+        <Media body>
+          <Media heading>name: {name}</Media>
+          <ListGroup>
+            <ListGroupItem>Birth Year: {birthYear}</ListGroupItem>
+            <ListGroupItem>Gender: {gender}</ListGroupItem>
+            <ListGroupItem>Height: {height}</ListGroupItem>
+            <ListGroupItem>Eye color: {eyeColor}</ListGroupItem>
+          </ListGroup>
+        </Media>
       </Media>
     )
   }
 }
 
-export default PeoplePage
+export default Details

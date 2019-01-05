@@ -1,6 +1,7 @@
 export default class Swapi {
   _URL = 'https://swapi.co/api/'
   PIC_URL = 'https://starwars-visualguide.com/assets/img/planets/'
+  PIC_PERSON_URL = 'https://starwars-visualguide.com/assets/img/characters/'
 
 
   getResource = async url => {
@@ -50,7 +51,7 @@ export default class Swapi {
     pic:`${this.PIC_URL}/${this._getIdFromUrl(url)}.jpg`
   })
 
-  _getTransformPeople = ({url, name, height, mass, birth_year, gender}) => ({
+  _getTransformPeople = ({url, name, height, mass, birth_year, gender, eye_color}) => ({
     id: this._getIdFromUrl(url),
     name,
     height,
@@ -58,6 +59,8 @@ export default class Swapi {
     mass,
     gender,
     url,
+    eyeColor: eye_color,
+    pic:`${this.PIC_PERSON_URL}${this._getIdFromUrl(url)}.jpg`
   })
 
   _getTransformStarships = ({url, name, model, manufacturer, cost_in_credits, passengers}) => ({

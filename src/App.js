@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Header from './components/header'
 import RandomPlanet from './components/random-planet'
-import HeroList from './components/hero-list'
+import PeoplePage from './components/people-page'
 import {Container} from 'reactstrap'
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
             <RandomPlanet />
           </main>
         </Container>
-       <HeroList />
+       <PeoplePage />
       </div>
     )
   }

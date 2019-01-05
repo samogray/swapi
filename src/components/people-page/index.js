@@ -1,8 +1,10 @@
 import React from 'react'
 import {Container, Row, Col, ListGroup, ListGroupItem, Media} from 'reactstrap'
+import ItemList from './item-list'
+// import PeoopleDetails from './details'
 import SwapiService from '../../utils/swapi-service'
 
-class HeroList extends React.Component {
+class PeoplePage extends React.Component {
   swapiService = new SwapiService()
 
   state = {
@@ -29,27 +31,19 @@ class HeroList extends React.Component {
 
   render() {
     console.log(this.state.peoples)
-    const {peoples, activeHero} = this.state
+    const {peoples, activeHero, error} = this.state
     return (
-      <Container style={{marginTop: '36px'}}>
+      error ? <div>Component is failed</div> : <Container style={{marginTop: '36px'}}>
         <Row>
           <Col xs="4">
-            <ListGroup flush>
-              {peoples.map(({name, id}) => (
-                <ListGroupItem
-                  action
-                  tag="button"
-                  type="button"
-                  key={id}
-                  active={activeHero === id}
-                  onClick={() => this.handleClick(id)}
-                >
-                  {name}
-                </ListGroupItem>
-              ))}
-            </ListGroup>
+            <ItemList
+              items={peoples}
+              activeItem={activeHero}
+              handleClick={this.handleClick}
+            />
           </Col>
-          <Col xs="8">
+           <Col xs="8">
+          {/* <PeoopleDetails /> */}
             <Media>
               <Media left href="#">
                 <Media
@@ -76,4 +70,4 @@ class HeroList extends React.Component {
   }
 }
 
-export default HeroList
+export default PeoplePage

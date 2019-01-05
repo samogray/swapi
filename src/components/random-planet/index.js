@@ -8,6 +8,7 @@ import {
   ListGroupItem,
   Container,
   Row,
+  Button,
   Col
 } from 'reactstrap'
 
@@ -25,8 +26,7 @@ class RandomPlanet extends React.Component {
   }
 
   componentDidMount() {
-    const id = Math.floor(Math.random() * 25) + 2
-    this.updatePlanet(id)
+    this.togglePlanet()
   }
 
   onPlanetLoaded = planet => this.setState({planet, loading: false})
@@ -38,6 +38,11 @@ class RandomPlanet extends React.Component {
       .getPlanet(id)
       .then(this.onPlanetLoaded)
       .catch(this.onErrror)
+
+  togglePlanet =()=> {
+    const id = Math.floor(Math.random() * 25) + 2
+    this.updatePlanet(id)
+  }
 
   render() {
 
@@ -84,6 +89,7 @@ class RandomPlanet extends React.Component {
             ) : (
               <div>Error message</div>
             )}
+            <Row><Col xs="12"><Button onClick={this.togglePlanet}>Toggle planet</Button></Col></Row>
             {this.state.loading && <Spinner />}
           </Container>
         </Card>

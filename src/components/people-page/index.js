@@ -13,6 +13,7 @@ class PeoplePage extends React.Component {
     error: false,
     currentPerson: 1,
     loading: true,
+    errorInfo: '',
   }
 
   componentDidMount() {
@@ -24,7 +25,12 @@ class PeoplePage extends React.Component {
     loading: false,
   })
 
-  onErrror = () => this.setState({error: true, loading: false})
+  onErrror = (errorInfo) => this.setState({error: true, loading: false, errorInfo})
+
+  componentDidCatch(error, errorInfo) {
+    console.log('componentDidCatch', error, errorInfo)
+    this.onErrror(`${error.toString()}${errorInfo.componentStack.toString()}`)
+  }
 
   loadPeopleList = () =>
     this.swapiService
@@ -35,9 +41,9 @@ class PeoplePage extends React.Component {
   handleClick = (id) => this.setState({currentPerson: id})
 
   render() {
-    const {peoples, currentPerson, error} = this.state
+    const {peoples, currentPerson, error, errorInfo} = this.state
     return (
-      error ? <div>Component is failed</div> : <Container style={{marginTop: '36px'}}>
+      error ? <div>`Component is failed ${errorInfo}`</div> : <Container style={{marginTop: '36px'}}>
         <Row>
           <Col xs="4">
             <ItemList

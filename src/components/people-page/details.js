@@ -1,15 +1,14 @@
 import React from 'react'
-import {ListGroup, ListGroupItem, Media} from 'reactstrap'
+import {ListGroup, ListGroupItem, Media, Button} from 'reactstrap'
 import Spinner from '../spinner'
 
 import SwapiService from '../../utils/swapi-service'
-
 
 class Details extends React.Component {
   swapiService = new SwapiService()
 
   state = {
-    error: false,
+    hasError: false,
     loading: true
   }
 
@@ -22,6 +21,11 @@ class Details extends React.Component {
       this.setState({loading: true})
       this.loadPerson()
     }
+  }
+
+  componentDidCatch() {
+    console.log('componentDidCatch')
+    this.setState({hasError: true})
   }
 
   onPersonLoaded = ({name, birthYear, height, eyeColor, gender, pic}) =>
@@ -46,12 +50,28 @@ class Details extends React.Component {
       .catch(this.onErrror)
   }
 
+  handleError = () => this.setState({handleError: true})
+
   render() {
-    const {name, birthYear, height, eyeColor, gender, loading, pic} = this.state
+    if (this.state.handleError) {
+      this.foo()
+    }
+
+    const {
+      name,
+      birthYear,
+      height,
+      eyeColor,
+      gender,
+      loading,
+      pic,
+    } = this.state
     console.log('render Details component')
 
-    return (
-      loading ? <Spinner /> : <Media>
+    return loading ? (
+      <Spinner />
+    ) : (
+      <Media>
         <Media left href="#">
           <Media
             object
@@ -68,6 +88,7 @@ class Details extends React.Component {
             <ListGroupItem>Height: {height}</ListGroupItem>
             <ListGroupItem>Eye color: {eyeColor}</ListGroupItem>
           </ListGroup>
+          <Button onClick={this.handleError}>Generate error</Button>
         </Media>
       </Media>
     )

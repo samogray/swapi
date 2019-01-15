@@ -1,23 +1,45 @@
 import React from 'react'
+import Spinner from '../spinner'
 import {ListGroup, ListGroupItem} from 'reactstrap'
 
+
 class ItemList extends React.Component {
+
+  state = {
+    itemList: [],
+    loading: true,
+  }
+
+  componentDidMount() {
+    const {getData} = this.props
+    getData 
+      .then((itemList) => this.setState({itemList, loading: false}) )
+      .catch(this.onErrror)  
+  }
+  
+
   render() {
-    const {items, activeItem, handleClick} = this.props
-    return (
+   
+    const {itemList, loading} = this.state
+    const {onItemSelected, activeItem=1} = this.props
+    console.log('activeItem', activeItem)
+    return  ( loading ? <Spinner /> :
       <ListGroup flush>
-        {items.map(({name, id}) => (
-          <ListGroupItem
-            action
-            tag="button"
-            type="button"
-            key={id}
-            active={activeItem.toString().toLowerCase() === id}
-            onClick={() => handleClick(id)}
-          >
-            {name}
-          </ListGroupItem>
-        ))}
+        {itemList.map((item) => {
+          const {id, name} = item
+          return (
+            <ListGroupItem
+              action
+              tag="button"
+              type="button"
+              key={id}
+              active={activeItem.toString().toLowerCase() === id}
+              onClick={() => onItemSelected(id)}
+            >
+              {name}
+            </ListGroupItem>
+          )
+        })}
       </ListGroup>
     )
   }

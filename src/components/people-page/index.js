@@ -9,20 +9,18 @@ class PeoplePage extends React.Component {
   swapiService = new SwapiService()
 
   state = {
-    peoples: [],
     error: false,
-    currentPerson: 1,
+    currentItem: 1,
     loading: true,
     errorInfo: '',
   }
 
   componentDidMount() {
-    this.loadPeopleList()
+    //this.loadPeopleList()
   }
 
   onPeoplesLoaded = peoples => this.setState({
     peoples,
-    loading: false,
   })
 
   onErrror = (errorInfo) => this.setState({error: true, loading: false, errorInfo})
@@ -32,28 +30,33 @@ class PeoplePage extends React.Component {
     this.onErrror(`${error.toString()}${errorInfo.componentStack.toString()}`)
   }
 
-  loadPeopleList = () =>
-    this.swapiService
-      .getAllPeople()
-      .then(this.onPeoplesLoaded)
-      .catch(this.onErrror)
-
-  handleClick = (id) => this.setState({currentPerson: id})
+  onItemSelected = (id) => this.setState({currentItem: id})
 
   render() {
-    const {peoples, currentPerson, error, errorInfo} = this.state
+    const {peoples, currentItem, error, errorInfo} = this.state
     return (
       error ? <div>`Component is failed ${errorInfo}`</div> : <Container style={{marginTop: '36px'}}>
         <Row>
           <Col xs="4">
             <ItemList
-              items={peoples}
-              activeItem={currentPerson}
-              handleClick={this.handleClick}
+              getData={this.swapiService.getAllPeople()}
+              onItemSelected={this.onItemSelected}
+              activeItem={currentItem}
             />
           </Col>
            <Col xs="8">
-            <Details personId={currentPerson}/>
+            <Details personId={currentItem}/>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="4">
+            <ItemList
+              getData={this.swapiService.getAllPlanets()}
+              // handleClick={this.handleClick}
+            />
+          </Col>
+           <Col xs="8">
+            <Details personId={currentItem}/>
           </Col>
         </Row>
       </Container>

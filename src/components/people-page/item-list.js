@@ -27,6 +27,7 @@ class ItemList extends React.Component {
       <ListGroup flush>
         {itemList.map((item) => {
           const {id, name} = item
+          const label = this.props.children(item)
           return (
             <ListGroupItem
               action
@@ -36,7 +37,7 @@ class ItemList extends React.Component {
               active={activeItem.toString().toLowerCase() === id}
               onClick={() => onItemSelected(id)}
             >
-              {name}
+              {label || name}
             </ListGroupItem>
           )
         })}

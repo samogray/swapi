@@ -2,6 +2,7 @@ import React from 'react'
 import {Container, Row, Col} from 'reactstrap'
 import ItemList from './item-list'
 import Details from './details'
+import ErrorBoundry from '../error-boundry'
 import SwapiService from '../../utils/swapi-service'
 import './style.css'
 
@@ -9,10 +10,8 @@ class PeoplePage extends React.Component {
   swapiService = new SwapiService()
 
   state = {
-    error: false,
     currentItem: 1,
     loading: true,
-    errorInfo: '',
   }
 
   componentDidMount() {
@@ -23,12 +22,6 @@ class PeoplePage extends React.Component {
     peoples,
   })
 
-  onErrror = (errorInfo) => this.setState({error: true, loading: false, errorInfo})
-
-  componentDidCatch(error, errorInfo) {
-    console.log('componentDidCatch', error, errorInfo)
-    this.onErrror(`${error.toString()}${errorInfo.componentStack.toString()}`)
-  }
 
   onItemSelected = (id) => this.setState({currentItem: id})
 
@@ -42,23 +35,30 @@ class PeoplePage extends React.Component {
               getData={this.swapiService.getAllPeople()}
               onItemSelected={this.onItemSelected}
               activeItem={currentItem}
-            />
+            >
+              {({name, gender}) => <span>{name} <strong>{gender}</strong></span>}
+            </ItemList>
           </Col>
            <Col xs="8">
-            <Details personId={currentItem}/>
+           <ErrorBoundry>
+              <Details personId={currentItem}/>
+            </ErrorBoundry>
           </Col>
         </Row>
-        <Row>
+        <br/>
+        <br/>
+        {/* <Row>
           <Col xs="4">
             <ItemList
               getData={this.swapiService.getAllPlanets()}
-              // handleClick={this.handleClick}
+              onItemSelected={this.onItemSelected}
+              //activeItem={currentItem}
             />
           </Col>
            <Col xs="8">
             <Details personId={currentItem}/>
           </Col>
-        </Row>
+        </Row> */}
       </Container>
     )
   }

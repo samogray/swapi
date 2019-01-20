@@ -4,53 +4,41 @@ import Spinner from '../spinner'
 
 import SwapiService from '../../utils/swapi-service'
 
-class Details extends React.Component {
+class ItemDetails extends React.Component {
   swapiService = new SwapiService()
 
   state = {
-    hasError: false,
-    loading: true
+    //hasError: false,
+    loading: true,
+    item: null,
+    image: null,
   }
 
   componentDidMount() {
-    this.loadPerson()
+    this.loadItem()
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.personId !== prevProps.personId) {
+    if (this.props.activeItem !== prevProps.activeItem) {
       this.setState({loading: true})
-      this.loadPerson()
+      this.loadItem()
     }
   }
 
-  componentDidCatch() {
-    console.log('componentDidCatch')
-    this.setState({hasError: true})
-  }
-
-  onPersonLoaded = ({name, birthYear, height, eyeColor, gender, pic}) =>
-    this.setState({
-      name,
-      birthYear,
-      height,
-      eyeColor,
-      gender,
-      pic,
-      loading: false
-    })
-
-  loadPerson = () => {
-    if (!this.props.personId) {
+  loadItem = () => {
+    const {activeItem=1, getData, getImageUrl} = this.props
+    console.log(getData)
+    if (!activeItem) {
       return
     }
 
-    this.swapiService
-      .getPerson(this.props.personId)
-      .then(this.onPersonLoaded)
-      .catch(this.onErrror)
+    getData(activeItem).then((item) => this.setState({
+      item,
+      loading: false,
+      image: getImageUrl(item)
+    }))
+    .catch(this.onErrror)
   }
-
-  handleError = () => this.setState({handleError: true})
 
   render() {
     if (this.state.handleError) {
@@ -58,15 +46,11 @@ class Details extends React.Component {
     }
 
     const {
-      name,
-      birthYear,
-      height,
-      eyeColor,
-      gender,
+      item,
       loading,
-      pic,
+      image,
     } = this.state
-    console.log('render Details component')
+
 
     return loading ? (
       <Spinner />
@@ -75,18 +59,15 @@ class Details extends React.Component {
         <Media left href="#">
           <Media
             object
-            src={pic}
+            src={image}
             className="picture"
             alt="Generic placeholder image"
           />
         </Media>
         <Media body>
-          <Media heading>name: {name}</Media>
+          <Media heading>name: {item.name}</Media>
           <ListGroup>
-            <ListGroupItem>Birth Year: {birthYear}</ListGroupItem>
-            <ListGroupItem>Gender: {gender}</ListGroupItem>
-            <ListGroupItem>Height: {height}</ListGroupItem>
-            <ListGroupItem>Eye color: {eyeColor}</ListGroupItem>
+            {this.props.renderDetails(item)}
           </ListGroup>
           <Button onClick={this.handleError}>Generate error</Button>
         </Media>
@@ -95,4 +76,4 @@ class Details extends React.Component {
   }
 }
 
-export default Details
+export default ItemDetails

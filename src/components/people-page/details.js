@@ -27,7 +27,6 @@ class ItemDetails extends React.Component {
 
   loadItem = () => {
     const {activeItem=1, getData, getImageUrl} = this.props
-    console.log(getData)
     if (!activeItem) {
       return
     }

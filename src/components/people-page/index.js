@@ -1,9 +1,10 @@
 import React from 'react'
 import {Container, Row, Col, ListGroupItem} from 'reactstrap'
-import ItemList from './item-list'
+import ItemList from '../item-list'
 import ItemDetails from './details'
 import ErrorBoundry from '../error-boundry'
 import SwapiService from '../../utils/swapi-service'
+import {PeopleList, StarshipsList} from '../list-nav'
 import {Fragment} from 'react'
 import './style.css'
 
@@ -11,14 +12,8 @@ class PeoplePage extends React.Component {
   swapiService = new SwapiService()
 
   state = {
-    currentItem: 1,
-    loading: true
+    currentItem: 1
   }
-
-  onPeoplesLoaded = peoples =>
-    this.setState({
-      peoples
-    })
 
   renderPersonDetails = ({birthYear, gender, height, eyeColor}) => (
     <Fragment>
@@ -47,17 +42,10 @@ class PeoplePage extends React.Component {
       <Container style={{marginTop: '36px'}}>
         <Row>
           <Col xs="4">
-            <ItemList
-              getData={this.swapiService.getAllPeople()}
+            <PeopleList
               onItemSelected={this.onItemSelected}
               activeItem={currentItem}
-            >
-              {({name, gender}) => (
-                <span>
-                  {name} <strong>{gender}</strong>
-                </span>
-              )}
-            </ItemList>
+            />
           </Col>
           <Col xs="8">
             <ErrorBoundry>

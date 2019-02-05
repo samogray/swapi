@@ -2,8 +2,7 @@ import React from 'react'
 import Spinner from '../spinner'
 
 
-const withIdData = (Component, getData, ...rest) => {
-const [getImageUrl, ] = rest
+const withIdData = (Component) => {
   return class extends React.Component {
       state = {
         data: null,
@@ -21,10 +20,10 @@ const [getImageUrl, ] = rest
         }
       }
 
-      loadData = () => getData(this.props.activeItem).then((data) => this.setState({
+      loadData = () => this.props.getData(this.props.activeItem).then((data) => this.setState({
         data,
         loading: false,
-        image: getImageUrl(data)
+        image: this.props.getImageUrl(data)
       })).catch(this.onErrror)
 
 

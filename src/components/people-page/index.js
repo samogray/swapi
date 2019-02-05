@@ -4,6 +4,7 @@ import {PeopleDetails} from '../details/render-details'
 import ErrorBoundry from '../error-boundry'
 import SwapiService from '../../utils/swapi-service'
 import {PeopleList} from '../list-nav'
+import {SwapiServiceProvider} from '../provider'
 import './style.css'
 
 class PeoplePage extends React.Component {
@@ -21,27 +22,25 @@ class PeoplePage extends React.Component {
     return error ? (
       <div>`Component is failed ${errorInfo}`</div>
     ) : (
-      <Container style={{marginTop: '36px'}}>
-        <Row>
-          <Col xs="4">
-            <PeopleList
-              onItemSelected={this.onItemSelected}
-              activeItem={currentItem}
-            />
-          </Col>
-          <Col xs="8">
-            <ErrorBoundry>
-              <PeopleDetails
+      <SwapiServiceProvider value={this.swapiService}>
+        <Container style={{marginTop: '36px'}}>
+          <Row>
+            <Col xs="4">
+              <PeopleList
+                onItemSelected={this.onItemSelected}
                 activeItem={currentItem}
               />
-             {/* <PlanetDetails
-                activeItem={currentItem}
-                onItemSelected={this.onItemSelected}
-              /> */}
-            </ErrorBoundry>
-          </Col>
-        </Row>
-      </Container>
+            </Col>
+            <Col xs="8">
+              <ErrorBoundry>
+                <PeopleDetails
+                  activeItem={currentItem}
+                />
+              </ErrorBoundry>
+            </Col>
+          </Row>
+        </Container>
+      </SwapiServiceProvider>
     )
   }
 }

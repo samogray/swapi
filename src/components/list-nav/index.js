@@ -1,9 +1,7 @@
 import React from 'react'
-import SwapiService from '../../utils/swapi-service'
 import withData from '../hoc/get-data'
+import withSwapiService from '../hoc/with-swapi-service'
 import ItemList from '../item-list'
-
-const {getAllPeople, getAllStarships} = new SwapiService()
 
 const Wrapped = (Wrap, renderFn) => (props) => <Wrap {...props}>{renderFn}</Wrap>
 
@@ -21,5 +19,13 @@ const renderStarShipList = Wrapped(ItemList,
   </span>
 ))
 
-export const PeopleList = withData(renderPersonList, getAllPeople)
-export const StarshipsList = withData(renderStarShipList, getAllStarships)
+const mapPersonMetodtsToProps = (swapiService) => ({
+  getData: swapiService.getAllPeople,
+})
+
+const mapStarShipsMetodtsToProps = (swapiService) => ({
+  getData: swapiService.getAllStarships,
+})
+
+export const PeopleList = withSwapiService(withData(renderPersonList), mapPersonMetodtsToProps)
+export const StarshipsList = withSwapiService(withData(renderStarShipList), mapStarShipsMetodtsToProps)

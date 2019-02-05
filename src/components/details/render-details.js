@@ -1,12 +1,11 @@
 import React from 'react'
-import SwapiService from '../../utils/swapi-service'
 import withIdData from '../hoc/get-data-id'
+import withSwapiService from '../hoc/with-swapi-service'
 import {ListGroupItem} from 'reactstrap'
 import {Fragment} from 'react'
 
 import Details from './index'
 
-const {getPerson, getPersonImg, getPlanetImg, getPlanet} = new SwapiService()
 
 const Wrapped = (Wrap, renderFn) => props => <Wrap {...props}>{renderFn}</Wrap>
 
@@ -33,13 +32,21 @@ const renderPlanetsDetails = Wrapped(
   )
 )
 
-export const PeopleDetails = withIdData(
-  renderPersonDetails,
-  getPerson,
-  getPersonImg
+const mapPersonDetails = (swapiService) => ({
+  getData: swapiService.getPerson,
+  getImageUrl: swapiService.getPersonImg
+})
+
+const mapPlanetDetails = (swapiService) => ({
+  getData: swapiService.getPlanet,
+  getImageUrl: swapiService.getPlanetImg
+})
+
+export const PeopleDetails = withSwapiService(
+  withIdData(renderPersonDetails),
+  mapPersonDetails
 )
-export const PlanetDetails = withIdData(
-  renderPlanetsDetails,
-  getPlanet,
-  getPlanetImg
+export const PlanetDetails =  withSwapiService(
+  withIdData(renderPlanetsDetails),
+  mapPlanetDetails
 )

@@ -22,7 +22,6 @@ const renderPersonDetails = Wrapped(
 )
 
 const renderPlanetsDetails = Wrapped(
-  Details,
   ({population, rotation, diameter}) => (
     <Fragment>
       <ListGroupItem>Population: {population}</ListGroupItem>

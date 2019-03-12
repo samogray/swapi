@@ -1,18 +1,19 @@
 import React from 'react'
 import {NavbarBrand, Nav, NavItem, NavLink, Navbar} from 'reactstrap'
+import {Link} from 'react-router-dom'
 
 const Header = () => (
   <Navbar color="light" light expand="md">
-    <NavbarBrand href="/">Swapi</NavbarBrand>
+    <Link to="/" className="navbar-brand">Swapi</Link>
     <Nav className="ml-auto" navbar>
       <NavItem>
-        <NavLink href="#1">People</NavLink>
+        <Link to="/people" className="nav-link">People</Link>
       </NavItem>
       <NavItem>
-        <NavLink href="#0">Planets</NavLink>
+        <Link to="/planets"  className="nav-link">Planets</Link>
       </NavItem>
       <NavItem>
-        <NavLink href="#starshops">Starsips </NavLink>
+        <Link to="/starships"  className="nav-link">Starsips </Link>
       </NavItem>
     </Nav>
   </Navbar>

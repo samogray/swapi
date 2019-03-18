@@ -3,6 +3,7 @@ import {ListGroup, ListGroupItem} from 'reactstrap'
 
 
 const ItemList = ({data=[], children, onItemSelected, activeItem = 1}) => {
+  console.log('data', data)
   return (
     <ListGroup flush>
       {data.map(item => {

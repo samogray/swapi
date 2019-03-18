@@ -21,7 +21,19 @@ const renderPersonDetails = Wrapped(
   )
 )
 
-const renderPlanetsDetails = Wrapped(
+const renderStarShipDetails = Wrapped(
+  Details,
+  ({name, model, starshipClass}) => console.log(name, model, starshipClass) || (
+    <Fragment>
+      <ListGroupItem>Name: {name}</ListGroupItem>
+      <ListGroupItem>Model: {model}</ListGroupItem>
+      <ListGroupItem>Starship Class: {starshipClass}</ListGroupItem>
+    </Fragment>
+  )
+)
+
+const renderPlanetsDetails= Wrapped(
+  Details,
   ({population, rotation, diameter}) => (
     <Fragment>
       <ListGroupItem>Population: {population}</ListGroupItem>
@@ -41,11 +53,22 @@ const mapPlanetDetails = (swapiService) => ({
   getImageUrl: swapiService.getPlanetImg
 })
 
+const mapStarShipDetails = (swapiService) => ({
+  getData: swapiService.getStarship,
+  getImageUrl: swapiService.getStarshipImg
+})
+
 export const PeopleDetails = withSwapiService(
   withIdData(renderPersonDetails),
   mapPersonDetails
 )
+
 export const PlanetDetails =  withSwapiService(
   withIdData(renderPlanetsDetails),
   mapPlanetDetails
+)
+
+export const StarShipDetails =  withSwapiService(
+  withIdData(renderStarShipDetails),
+  mapStarShipDetails
 )

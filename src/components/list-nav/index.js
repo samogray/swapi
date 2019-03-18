@@ -19,6 +19,13 @@ const renderStarShipList = Wrapped(ItemList,
   </span>
 ))
 
+const renderPlanetList = Wrapped(ItemList,
+({name}) => (
+  <span>
+    {name}
+  </span>
+))
+
 const mapPersonMetodtsToProps = (swapiService) => ({
   getData: swapiService.getAllPeople,
 })
@@ -27,5 +34,10 @@ const mapStarShipsMetodtsToProps = (swapiService) => ({
   getData: swapiService.getAllStarships,
 })
 
+const mapPlanetsMetodtsToProps = (swapiService) => ({
+  getData: swapiService.getAllPlanets,
+})
+
 export const PeopleList = withSwapiService(withData(renderPersonList), mapPersonMetodtsToProps)
 export const StarshipsList = withSwapiService(withData(renderStarShipList), mapStarShipsMetodtsToProps)
+export const PlanetsList = withSwapiService(withData(renderPlanetList), mapPlanetsMetodtsToProps)

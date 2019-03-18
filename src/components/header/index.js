@@ -13,7 +13,7 @@ const Header = () => (
         <Link to="/planets"  className="nav-link">Planets</Link>
       </NavItem>
       <NavItem>
-        <Link to="/starships"  className="nav-link">Starsips </Link>
+        <Link to="/starships"  className="nav-link">Starships </Link>
       </NavItem>
     </Nav>
   </Navbar>

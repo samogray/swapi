@@ -1,14 +1,13 @@
 import React from 'react'
 import {Container, Row, Col} from 'reactstrap'
-import {PeopleDetails} from '../../details/render-details'
+import {PlanetDetails} from '../../details/render-details'
 import ErrorBoundry from '../../error-boundry'
-import {PeopleList} from '../../list-nav'
+import {PlanetsList} from '../../list-nav'
 import {withRouter} from 'react-router-dom'
-import './style.css'
 
-class PeoplePage extends React.Component {
+class PlanetsPage extends React.Component {
   onItemSelected = (itemId) => {
-    this.props.history.push(`/people/${itemId}`)
+    this.props.history.push(`/planets/${itemId}`)
   }
 
   render() {
@@ -17,14 +16,14 @@ class PeoplePage extends React.Component {
       <Container style={{marginTop: '36px'}}>
         <Row>
           <Col xs="4">
-            <PeopleList
+            <PlanetsList
               onItemSelected={this.onItemSelected}
               activeItem={id}
             />
           </Col>
           <Col xs="8">
             <ErrorBoundry>
-              <PeopleDetails activeItem={id} />
+              <PlanetDetails activeItem={id} />
             </ErrorBoundry>
           </Col>
         </Row>
@@ -33,4 +32,4 @@ class PeoplePage extends React.Component {
   }
 }
 
-export default withRouter(PeoplePage)
+export default withRouter(PlanetsPage)

@@ -1,30 +1,29 @@
 import React from 'react'
 import {Container, Row, Col} from 'reactstrap'
-import {PeopleDetails} from '../../details/render-details'
+import {StarShipDetails} from '../../details/render-details'
 import ErrorBoundry from '../../error-boundry'
-import {PeopleList} from '../../list-nav'
+import {StarshipsList} from '../../list-nav'
 import {withRouter} from 'react-router-dom'
-import './style.css'
 
-class PeoplePage extends React.Component {
+class StarshipsPage extends React.Component {
   onItemSelected = (itemId) => {
-    this.props.history.push(`/people/${itemId}`)
+    this.props.history.push(`/starships/${itemId}`)
   }
 
   render() {
-    const {id=1} = this.props.match.params
+    const {id=15} = this.props.match.params
     return (
       <Container style={{marginTop: '36px'}}>
         <Row>
           <Col xs="4">
-            <PeopleList
+            <StarshipsList
               onItemSelected={this.onItemSelected}
               activeItem={id}
             />
           </Col>
           <Col xs="8">
             <ErrorBoundry>
-              <PeopleDetails activeItem={id} />
+              <StarShipDetails activeItem={id} />
             </ErrorBoundry>
           </Col>
         </Row>
@@ -33,4 +32,4 @@ class PeoplePage extends React.Component {
   }
 }
 
-export default withRouter(PeoplePage)
+export default withRouter(StarshipsPage)

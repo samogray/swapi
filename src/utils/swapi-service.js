@@ -3,6 +3,7 @@ export default class Swapi {
   PIC_URL = 'https://starwars-visualguide.com/assets/img/planets/'
   PIC_PERSON_URL = 'https://starwars-visualguide.com/assets/img/characters/'
   PIC_PLANET_URL = 'https://starwars-visualguide.com/assets/img/planets/'
+  PIC_STARSHIP_URL = 'https://starwars-visualguide.com/assets/img/starships/'
 
 
   getResource = async url => {
@@ -31,6 +32,8 @@ export default class Swapi {
     const starShip = await this.getResource(`starships/${id}/`)
     return this._getTransformStarships(starShip)
   }
+
+  getStarshipImg = ({id}) => `${this.PIC_STARSHIP_URL}${id}.jpg`
 
   getAllPeople = async () => {
     const {results} = await this.getResource(`people/`)

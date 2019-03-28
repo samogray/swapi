@@ -1,5 +1,5 @@
 import React from 'react'
-import {NavbarBrand, Nav, NavItem, NavLink, Navbar} from 'reactstrap'
+import {Nav, NavItem, Navbar} from 'reactstrap'
 import {Link} from 'react-router-dom'
 
 const Header = () => (
@@ -14,6 +14,12 @@ const Header = () => (
       </NavItem>
       <NavItem>
         <Link to="/starships"  className="nav-link">Starships </Link>
+      </NavItem>
+      <NavItem>
+        <Link to="/secret-page"  className="nav-link">Secret page </Link>
+      </NavItem>
+      <NavItem>
+        <Link to="/login"  className="nav-link">Login </Link>
       </NavItem>
     </Nav>
   </Navbar>
